@@ -13,7 +13,9 @@ install: freeze
 
 .PHONY: clean
 clean:
-	@rm -rf **/*.pyc **/__pycache__ build dist
+	@rm -rf **/*.pyc
+	@rm -rf **/__pycache__
+	@rm -rf build dist
 
 dist/docker-job: docker-job.py
 	@pyinstaller --onefile --specpath build/ docker-job.py

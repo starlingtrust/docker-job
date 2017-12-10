@@ -1,0 +1,13 @@
+sudo: required
+services:
+  - docker
+
+language: python
+python: ["3.6"]
+
+install:
+  - make init
+  - make freeze
+
+script:
+  - dist/docker-job ajmazurie/probe:latest -- --format yaml --to-stdout
