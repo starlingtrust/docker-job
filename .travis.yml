@@ -5,7 +5,7 @@ sudo: required
 
 env:
   PYTHON_VERSION="3.6.3"
-  PACKAGE_VERSION="0.0.0"
+  PACKAGE_VERSION="0.1.0"
 
 before_install:
   - pyenv install ${PYTHON_VERSION} --skip-existing
@@ -15,13 +15,13 @@ before_install:
 install:
   - PIPENV_YES=true pipenv install --dev
   - source $(pipenv --venv)/bin/activate
-  - make dist && tree
+  - make dist
 
 script:
   - dist/docker-job ajmazurie/probe:latest -- --format yaml --to-stdout
 
 before_deploy:
-  - mv dist/docker-job disrt/docker_job-${PACKAGE_VERSION}-${TRAVIS_OS_NAME}
+  - mv dist/docker-job dist/docker_job-${PACKAGE_VERSION}-${TRAVIS_OS_NAME}
 
 deploy:
   provider: releases
