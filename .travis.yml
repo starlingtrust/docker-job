@@ -2,25 +2,31 @@ language: generic
 #os: [linux, osx]
 
 sudo: required
-#services: [docker]
+
+env:
+  PYTHON_VERSION="3.6.3"
+  PACKAGE_VERSION="0.0.0"
 
 before_install:
-  - pyenv install 3.6.3 --skip-existing
-  - pyenv global 3.6.3
+  - pyenv install ${PYTHON_VERSION} --skip-existing
+  - pyenv global ${PYTHON_VERSION}
   - pip install pipenv
 
 install:
   - PIPENV_YES=true pipenv install --dev
   - source $(pipenv --venv)/bin/activate
-  - make dist
+  - make dist && tree
 
 script:
   - dist/docker-job ajmazurie/probe:latest -- --format yaml --to-stdout
 
+before_deploy:
+  - mv dist/docker-job disrt/docker_job-${PACKAGE_VERSION}-${TRAVIS_OS_NAME}
+
 deploy:
   provider: releases
   api_key: "${GITHUB_OAUTH_TOKEN}"
-  file: "dist/docker-job"
+  file: "dist/docker_job-${PACKAGE_VERSION}-${TRAVIS_OS_NAME}"
   skip_cleanup: true
   on:
     all_branches: true
