@@ -11,3 +11,4 @@ docker = "*"
 
 [dev-packages]
 pyinstaller = "*"
+bump2version = "*"

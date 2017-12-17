@@ -10,6 +10,8 @@ import sys
 import docker
 import docker.errors
 
+__version__ = "0.0.0"
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument("image",
@@ -31,6 +33,9 @@ parser.add_argument("--keep-container",
 parser.add_argument("--debug",
     action = "store_true", default = False,
     help = "Display debugging information")
+
+parser.add_argument("--version", action = "version",
+    version = __version__)
 
 # separate docker-job arguments from the job arguments
 if ("--" in sys.argv):

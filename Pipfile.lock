@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "22985a9d38ac152175f93b00b4974ca6ef0ecd455da595bf2ba2e63b82d2ef35"
+            "sha256": "99273c2d93b80be6e0bd39c1bf65d59e4d112dfdf1e158851a5f26e7c4446f09"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -17,7 +17,9 @@
             "sys_platform": "darwin"
         },
         "pipfile-spec": 6,
-        "requires": {},
+        "requires": {
+            "python_version": "3.6.3"
+        },
         "sources": [
             {
                 "name": "pypi",
@@ -29,10 +31,10 @@
     "default": {
         "certifi": {
             "hashes": [
-                "sha256:54a07c09c586b0e4c619f02a5e94e36619da8e2b053e20f594348c0611803704",
-                "sha256:40523d2efb60523e113b44602298f0960e900388cf3bb6043f645cf57ea9e3f5"
+                "sha256:244be0d93b71e93fc0a0a479862051414d0e00e16435707e5bf5000f92e04694",
+                "sha256:5ec74291ca1136b40f0379e1128ff80e866597e4e2c1e755739a913bbc3613c0"
             ],
-            "version": "==2017.7.27.1"
+            "version": "==2017.11.5"
         },
         "chardet": {
             "hashes": [
@@ -43,10 +45,10 @@
         },
         "docker": {
             "hashes": [
-                "sha256:7b587fa841218b0f27e41d1f1ec61398bd0a8a0cc364f3ab3c08290fa8d59e71",
-                "sha256:b876e6909d8d2360e0540364c3a952a62847137f4674f2439320ede16d6db880"
+                "sha256:11589e3a7742f900978b4d3e3a6910542ea44cc65de82835dc5f25fcdedc2c23",
+                "sha256:6f417527b3cfd7ba1f5be5fb1d9a2500706b5968f66773131d81c18e19b7a325"
             ],
-            "version": "==2.5.1"
+            "version": "==2.6.1"
         },
         "docker-pycreds": {
             "hashes": [
@@ -91,5 +93,45 @@
             "version": "==0.44.0"
         }
     },
-    "develop": {}
+    "develop": {
+        "altgraph": {
+            "hashes": [
+                "sha256:49dc134049903cc73fb76ca3cc9bef5b2b8c01c28732dd29594f99af2b449fc5",
+                "sha256:fc28b986a68fde8d3ff0e6d6ba3fbdd2cd562d11d45ef7c7735fbd826c9eec2e"
+            ],
+            "version": "==0.15"
+        },
+        "bump2version": {
+            "hashes": [
+                "sha256:77b404dd620cb1c5abbd4a0233443b95023f499cd5295e1caf6afb1efa95697d",
+                "sha256:fe49d35fc346fdda47c2b3bc48b41e15e79385904903d1bca247cc96ecd74e23"
+            ],
+            "version": "==0.5.6"
+        },
+        "future": {
+            "hashes": [
+                "sha256:e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb"
+            ],
+            "version": "==0.16.0"
+        },
+        "macholib": {
+            "hashes": [
+                "sha256:7f76a7ef4f58f85889dec25fb532bad5acfd461c444738dfeb2e7bf855d5906b",
+                "sha256:9aeec52d7da59912b15445d08b08d95cee48414f01dd035be06f04a825973c08"
+            ],
+            "version": "==1.9"
+        },
+        "pefile": {
+            "hashes": [
+                "sha256:675c35ee0e1677db9e80d2f48d8a7ff2cf38e6207e8cd5e2a2c6d126db025854"
+            ],
+            "version": "==2017.11.5"
+        },
+        "pyinstaller": {
+            "hashes": [
+                "sha256:715f81f24b1ef0e5fe3b3c71e7540551838e46e9de30882aa7c0a521147fd1ce"
+            ],
+            "version": "==3.3.1"
+        }
+    }
 }
