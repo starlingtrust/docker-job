@@ -7,13 +7,12 @@ env:
   PACKAGE_VERSION="0.1.0"
 
 before_install:
-  - pyenv install ${PYTHON_VERSION} --skip-existing
-  - pyenv global ${PYTHON_VERSION}
-  - pip install pipenv
+  - pyenv install ${PYTHON_VERSION} --skip-existing && pyenv global ${PYTHON_VERSION}
+  - pyenv exec pip install --upgrade --quiet --disable-pip-version-check pip pipenv
 
 install:
-  - PIPENV_YES=true pipenv install --dev
-  - source $(pipenv --venv)/bin/activate
+  - PIPENV_YES=true pyenv exec pipenv install --dev
+  - source $(pyenv exec pipenv --venv)/bin/activate
   - make dist
 
 script:
