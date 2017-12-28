@@ -1,5 +1,7 @@
 ## docker-job
 
+[![Build Status](https://travis-ci.org/starlingtrust/docker-job.svg)](https://travis-ci.org/starlingtrust/docker-job)
+
 **docker-job** is a wrapper that allows [Docker]() containers to be manipulated as command-line utilities, as if the program in this container was a local executable.
 
 Although `docker run` and `docker exec` are available options to run containers in a terminal, **docker-job** performs two key tasks:
