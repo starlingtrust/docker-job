@@ -4,7 +4,7 @@ sudo: required
 
 env:
   PYTHON_VERSION="3.6.3"
-  PACKAGE_VERSION="0.1.1"
+  PACKAGE_VERSION="0.1.2"
 
 before_install:
   - pyenv install ${PYTHON_VERSION} --skip-existing && pyenv global ${PYTHON_VERSION}

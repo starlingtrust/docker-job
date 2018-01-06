@@ -10,7 +10,7 @@ import sys
 import docker
 import docker.errors
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 parser = argparse.ArgumentParser()
 
