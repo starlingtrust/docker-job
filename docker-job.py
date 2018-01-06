@@ -73,15 +73,15 @@ def error (msg, is_exception = False):
 # extract paths from job arguments
 job_args_, current_mode = [], None
 for arg in job_args:
-    if (arg.lower() in ("input:", "output:")):
-        current_mode = arg.lower()[:-1]
+    if (arg.lower() in ("inputs:", "outputs:")):
+        current_mode = arg.lower()[:-2]
         continue
 
-    if (arg.lower() in (":input", ":output")):
-        mode = arg.lower()[1:]
+    if (arg.lower() in (":inputs", ":outputs")):
+        mode = arg.lower()[1:-1]
         if (current_mode != mode):
             error(("Invalid syntax: "
-                "Cannot close '%s:' block with ':%s' tag" % (current_mode, mode)))
+                "Cannot close '%ss:' block with ':%ss' tag" % (current_mode, mode)))
         current_mode = None
         continue
 
@@ -102,7 +102,7 @@ def qualify_path(path: str):
         # if the path doesn't exists, we consider
         # it to be a folder if it ends with a '/'
         is_folder = path.endswith(os.sep)
-    
+
     # get an absolute, normalized path
     normalized_path = os.path.abspath(path)
     if (is_folder): normalized_path += os.sep
@@ -117,7 +117,7 @@ for (i, arg) in enumerate(job_args):
 
     if (arg.lower().startswith("output:")):
         arg, mode = arg[7:], "output"
-    
+
     if (mode is not None):
         (normalized_path, exists, is_folder) = qualify_path(arg)
         path_args.setdefault(normalized_path, []).append(i)
@@ -210,35 +210,35 @@ try:
     try:
         logger.debug("Locating image '%s'", args.image)
         image = client.images.get(args.image)
-    
+
     except docker.errors.ImageNotFound:
         logger.debug("Pulling image '%s'", args.image)
         image = client.images.pull(args.image)
 
     try:
         logger.debug("job_args =\n%s", job_args)
-    
+
         container = client.containers.create(
             image, job_args, **container_kwargs)
-    
+
         logger.debug("Running container %s", container.id)
         container.start()
-    
+
         output = container.attach(
             stdout = True, stderr = True,
             stream = True, logs = True)
-        
+
         for line in output:
             sys.stdout.write(line.decode("utf-8"))
             sys.stdout.flush()
-    
+
         sys.exit(container.wait())
-    
+
     except KeyboardInterrupt:
         if (container is not None):
             logger.debug("Killing container %s", container.id)
             container.kill()
-    
+
     finally:
         if (container is not None) and (not args.keep_container):
             logger.debug("Removing container %s", container.id)
