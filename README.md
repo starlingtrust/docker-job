@@ -33,7 +33,7 @@ Although `docker run` and `docker exec` are available options to run containers 
 
 ### Quickstart
 
-**docker-job** has a simple syntax: `docker-job <1> [-- <2>]`, with `<1>` being the name of a Docker image plus some optional about the Docker server to use, and `<2>` the command line arguments to run within the container. Some examples:
+**docker-job** has a simple syntax: `docker-job <1> [-- <2>]`, with `<1>` being the name of a Docker image plus some options about the Docker server to use, and `<2>` the command line arguments to run within the container. Some examples:
 
 - Create a report about the default Docker environment:
   `$ docker-job ajmazurie/probe:latest -- --to-file output:report.json`
