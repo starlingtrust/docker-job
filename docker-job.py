@@ -15,27 +15,27 @@ __version__ = "0.1.2"
 parser = argparse.ArgumentParser()
 
 parser.add_argument("image",
-    metavar = "NAME[:TAG]",
-    help = "Name of the image")
+    metavar="NAME[:TAG]",
+    help="Name of the image")
 
 parser.add_argument("--server-version",
-    metavar = "VERSION", default = "auto",
-    help = "Docker server version (default: %(default)s)")
+    metavar="VERSION", default="auto",
+    help="Docker server version (default: %(default)s)")
 
 parser.add_argument("--remove-image",
-    action = "store_true", default = False,
-    help = "If set, remove the image after the run")
+    action="store_true", default=False,
+    help="If set, remove the image after the run")
 
 parser.add_argument("--keep-container",
-    action = "store_true", default = False,
-    help = "If set, keep the container after the run")
+    action="store_true", default=False,
+    help="If set, keep the container after the run")
 
 parser.add_argument("--debug",
-    action = "store_true", default = False,
-    help = "Display debugging information")
+    action="store_true", default=False,
+    help="Display debugging information")
 
-parser.add_argument("--version", action = "version",
-    version = __version__)
+parser.add_argument("--version",
+    action="version", version=__version__)
 
 # separate docker-job arguments from the job arguments
 if ("--" in sys.argv):
@@ -160,7 +160,7 @@ for (local_path, (mode, exists, is_folder)) in path_info.items():
             parent_path = os.path.dirname(local_path) + os.sep
 
         if (not exists):
-            os.makedirs(parent_path, mode = 0o700, exist_ok = True)
+            os.makedirs(parent_path, mode=0o700, exist_ok=True)
 
         # the path should be writable on the host
         if (exists):
@@ -193,7 +193,7 @@ if (args.debug):
         if (bind_source.endswith(os.sep)):
             bind_source_ += os.sep
         lines.append("  '%s': %s" % (bind_source_, path_binds[bind_source]))
-    logger.debug("path_binds = {\n%s\n }", "\n".join(lines))
+    logger.debug("path_binds={\n%s\n }", "\n".join(lines))
 
 # build arguments for the Docker container
 container_kwargs = {}
@@ -204,7 +204,7 @@ if (len(path_binds) > 0):
 container_kwargs["detach"] = True
 
 try:
-    client = docker.from_env(version = args.server_version)
+    client = docker.from_env(version=args.server_version)
     container = None
 
     try:
@@ -216,7 +216,8 @@ try:
         image = client.images.pull(args.image)
 
     try:
-        logger.debug("job_args =\n%s", job_args)
+        logger.debug("container_args=%s", container_kwargs)
+        logger.debug("job_args=\n%s", job_args)
 
         container = client.containers.create(
             image, job_args, **container_kwargs)
@@ -225,8 +226,8 @@ try:
         container.start()
 
         output = container.attach(
-            stdout = True, stderr = True,
-            stream = True, logs = True)
+            stdout=True, stderr=True,
+            stream=True, logs=True)
 
         for line in output:
             sys.stdout.write(line.decode("utf-8"))
@@ -242,11 +243,11 @@ try:
     finally:
         if (container is not None) and (not args.keep_container):
             logger.debug("Removing container %s", container.id)
-            container.remove(force = True)
+            container.remove(force=True)
 
         if (image is not None) and (args.remove_image):
             logger.debug("Removing image %s", image)
             client.images.remove(image)
 
 except docker.errors.APIError as e:
-    error(e, is_exception = True)
+    error(e, is_exception=True)
