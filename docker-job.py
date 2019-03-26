@@ -30,6 +30,10 @@ parser.add_argument("--keep-container",
     action="store_true", default=False,
     help="If set, keep the container after the run")
 
+parser.add_argument("--publish",
+    action="append", nargs=2, metavar=("CONTAINER_PORT", "HOST_PORT"),
+    help="Bind container port to host port")
+
 parser.add_argument("--debug",
     action="store_true", default=False,
     help="Display debugging information")
@@ -199,8 +203,25 @@ if (args.debug):
         lines = ""
     logger.debug("path_binds={%s}", lines)
 
+# validate ports and generate binding pairs
+port_binds = {}
+if (args.publish is not None):
+    def parse_port(value):
+        try:
+            return int(value)
+        except ValueError:
+            error("Invalid syntax: Invalid port number '%s'" % value)
+
+    for (container_port, host_port) in args.publish:
+        container_port = parse_port(container_port)
+        host_port = parse_port(host_port)
+        port_binds.setdefault(container_port, []).append(host_port)
+
 # build arguments for the Docker container
 container_kwargs = {}
+
+if (len(port_binds) > 0):
+    container_kwargs["ports"] = port_binds
 
 if (len(path_binds) > 0):
     container_kwargs["volumes"] = path_binds
