@@ -10,6 +10,11 @@ import sys
 import docker
 import docker.errors
 
+# work-around for https://github.com/pyinstaller/pyinstaller/issues/4064
+import distutils
+if distutils.distutils_path.endswith("__init__.py"):
+    distutils.distutils_path = os.path.dirname(distutils.distutils_path)
+
 __version__ = "0.2.0"
 
 parser = argparse.ArgumentParser()

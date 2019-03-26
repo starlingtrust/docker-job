@@ -4,11 +4,14 @@ sudo: required
 
 env:
   PYTHON_VERSION="3.6.3"
+  VIRTUALENV_VERSION="16.1.0"
   PACKAGE_VERSION="0.2.0"
 
 before_install:
+  - sudo apt-get install python3-distutils-extra python3-pip
   - pyenv install ${PYTHON_VERSION} --skip-existing && pyenv global ${PYTHON_VERSION}
   - pyenv exec pip install --upgrade --quiet --disable-pip-version-check pip pipenv
+  - pyenv exec pip install --ignore-installed --quiet "virtualenv==${VIRTUALENV_VERSION}"
 
 install:
   - PIPENV_YES=true pyenv exec pipenv install --dev
