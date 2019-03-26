@@ -62,7 +62,7 @@ logging.config.dictConfig({
 logger = logging.getLogger(
     os.path.splitext(os.path.basename(__file__))[0])
 
-def error (msg, is_exception = False):
+def error(msg, is_exception = False):
     if (is_exception) and (args.debug):
         logger.exception(msg)
     else:
@@ -193,7 +193,11 @@ if (args.debug):
         if (bind_source.endswith(os.sep)):
             bind_source_ += os.sep
         lines.append("  '%s': %s" % (bind_source_, path_binds[bind_source]))
-    logger.debug("path_binds={\n%s\n }", "\n".join(lines))
+    if (len(lines) > 0):
+        lines = "\n" + "\n".join(lines) + "\n "
+    else:
+        lines = ""
+    logger.debug("path_binds={%s}", lines)
 
 # build arguments for the Docker container
 container_kwargs = {}
@@ -208,7 +212,6 @@ try:
     container = None
 
     try:
-        logger.debug("Locating image '%s'", args.image)
         image = client.images.get(args.image)
 
     except docker.errors.ImageNotFound:
@@ -216,8 +219,8 @@ try:
         image = client.images.pull(args.image)
 
     try:
-        logger.debug("container_args=%s", container_kwargs)
-        logger.debug("job_args=\n%s", job_args)
+        logger.debug("container_kwargs=%s", container_kwargs)
+        logger.debug("job_args=%s", job_args)
 
         container = client.containers.create(
             image, job_args, **container_kwargs)
